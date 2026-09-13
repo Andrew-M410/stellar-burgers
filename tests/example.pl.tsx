@@ -40,17 +40,17 @@ test.beforeEach(async ({ page, context }) => {
 
   await page.routeFromHAR('tests/hars/ingredients.har', {
     url: '**/api/ingredients',
-    update: true
+    update: false
   });
 
   await page.routeFromHAR('tests/hars/user.har', {
     url: '**/api/auth/user',
-    update: true
+    update: false
   });
 
   await page.routeFromHAR('tests/hars/order.har', {
     url: '**/api/orders',
-    update: true
+    update: false
   });
 
   await page.goto('/');
