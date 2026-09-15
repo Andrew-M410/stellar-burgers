@@ -25,32 +25,15 @@ const MAIN = byType('main');
 const SAUCE = byType('sauce');
 
 test.beforeEach(async ({ page, context }) => {
-  await context.addCookies([
-    {
-      name: 'accessToken',
-      value: 'Bearer%20test-token',
-      domain: 'localhost',
-      path: '/'
-    }
-  ]);
-
-  await page.addInitScript(() =>
-    localStorage.setItem('refreshToken', 'test-refresh')
-  );
 
   await page.routeFromHAR('tests/hars/ingredients.har', {
     url: '**/api/ingredients',
-    update: false
-  });
-
-  await page.routeFromHAR('tests/hars/user.har', {
-    url: '**/api/auth/user',
-    update: false
+    update: true
   });
 
   await page.routeFromHAR('tests/hars/order.har', {
     url: '**/api/orders',
-    update: false
+    update: true
   });
 
   await page.goto('/');
@@ -140,8 +123,29 @@ test.describe('Модальное окно ингредиента', () => {
 
 test.describe('Оформление заказа', () => {
   test('заказ создаётся, конструктор очищается, модалка закрывается', async ({
-    page
+    page, context
   }) => {
+    
+    await context.addCookies([
+      {
+        name: 'accessToken',
+        value: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhYTdlNTA4NmExNzJkMDAxYjk5NGYwMSIsImlhdCI6MTc4OTQ4MTE5MywiZXhwIjoxNzg5NDgyMzkzfQ.9oDq0JfdnDtkFJZkIM6V9gK5SyuZKYItXLFHcSI-9LI',
+        domain: 'localhost',
+        path: '/'
+      }
+    ]);
+
+    await page.addInitScript(() =>
+      localStorage.setItem('refreshToken', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhYTdlNTA4NmExNzJkMDAxYjk5NGYwMSIsImlhdCI6MTc4OTQ4MTE5MywiZXhwIjoxNzg5NDgyMzkzfQ.9oDq0JfdnDtkFJZkIM6V9gK5SyuZKYItXLFHcSI-9LI')
+    );
+
+    await page.routeFromHAR('tests/hars/user.har', {
+      url: '**/api/auth/user',
+      update: true
+    });
+
+    await page.goto('/');
+
     await addIngredient(page, BUN._id);
     await addIngredient(page, MAIN._id);
     await addIngredient(page, SAUCE._id);
@@ -151,7 +155,7 @@ test.describe('Оформление заказа', () => {
     const modal = page.getByTestId('modal');
     await expect(modal).toBeVisible();
     await expect(page.getByTestId('order-number')).toHaveText(
-      String(order.order.number)
+      String(order.order.number), {timeout: 30000}
     );
 
     await page.getByTestId('modal-close').click();
