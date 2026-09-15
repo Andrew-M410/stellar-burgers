@@ -24,16 +24,16 @@ const BUN = byType('bun');
 const MAIN = byType('main');
 const SAUCE = byType('sauce');
 
-test.beforeEach(async ({ page, context }) => {
+test.beforeEach(async ({ page }) => {
 
   await page.routeFromHAR('tests/hars/ingredients.har', {
     url: '**/api/ingredients',
-    update: true
+    update: false
   });
 
   await page.routeFromHAR('tests/hars/order.har', {
     url: '**/api/orders',
-    update: true
+    update: false
   });
 
   await page.goto('/');
@@ -141,7 +141,7 @@ test.describe('Оформление заказа', () => {
 
     await page.routeFromHAR('tests/hars/user.har', {
       url: '**/api/auth/user',
-      update: true
+      update: false
     });
 
     await page.goto('/');
