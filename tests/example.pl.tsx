@@ -129,14 +129,14 @@ test.describe('Оформление заказа', () => {
     await context.addCookies([
       {
         name: 'accessToken',
-        value: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhYTdlNTA4NmExNzJkMDAxYjk5NGYwMSIsImlhdCI6MTc4OTQ4MTE5MywiZXhwIjoxNzg5NDgyMzkzfQ.9oDq0JfdnDtkFJZkIM6V9gK5SyuZKYItXLFHcSI-9LI',
+        value: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhYTdlNTA4NmExNzJkMDAxYjk5NGYwMSIsImlhdCI6MTc4OTU2ODI1NSwiZXhwIjoxNzg5NTY5NDU1fQ.7kXd9cIwEK8hq7EzDySXZ0jvVNTWNOXIK1P3oaaG2AQ',
         domain: 'localhost',
         path: '/'
       }
     ]);
 
     await page.addInitScript(() =>
-      localStorage.setItem('refreshToken', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhYTdlNTA4NmExNzJkMDAxYjk5NGYwMSIsImlhdCI6MTc4OTQ4MTE5MywiZXhwIjoxNzg5NDgyMzkzfQ.9oDq0JfdnDtkFJZkIM6V9gK5SyuZKYItXLFHcSI-9LI')
+      localStorage.setItem('refreshToken', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhYTdlNTA4NmExNzJkMDAxYjk5NGYwMSIsImlhdCI6MTc4OTU2ODI1NSwiZXhwIjoxNzg5NTY5NDU1fQ.7kXd9cIwEK8hq7EzDySXZ0jvVNTWNOXIK1P3oaaG2AQ')
     );
 
     await page.routeFromHAR('tests/hars/user.har', {
